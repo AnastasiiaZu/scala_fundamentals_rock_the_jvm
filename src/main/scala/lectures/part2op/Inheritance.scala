@@ -1,6 +1,6 @@
 package lectures.part2op
 
-object Inheritance_and_Traits extends App {
+object Inheritance extends App {
 
   // functions are Private, Protected, or Public (default)
   class Animal {
