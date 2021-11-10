@@ -1,3 +1,4 @@
+/*
 package lectures.part2op
 
 object Enums extends App {
@@ -36,3 +37,4 @@ object Enums extends App {
   val readPermission: Permissions = Permissions.valueOf("READ") // Permissions.READ
 
 }
+*/

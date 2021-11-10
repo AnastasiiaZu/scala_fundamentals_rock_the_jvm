@@ -14,7 +14,7 @@ object Functions extends App {
   def aParameterlessFunction(): Int = 42
 
   println(aParameterlessFunction())
-  println(aParameterlessFunction) //accessed as parameterless by the compiler
+  println(aParameterlessFunction()) //accessed as parameterless by the compiler
 
   //Functions instead of loops
   def aRepeatedFunction(aString: String, n: Int): String = { // a recursive function - it calls itself

@@ -58,7 +58,7 @@ object Generics extends App {
   val cage = new Cage(new Dog)
 
   class Car
-  val newCage = new Cage(new Car) // <- compile error
+  //val newCage = new Cage(new Car) // <- compile error
 
   // 2. lower bounded type
   class Owner[A >: Animal](owner: A)
