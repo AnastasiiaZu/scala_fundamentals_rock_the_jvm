@@ -49,7 +49,7 @@ try {
         - divide
    */
 // OOM
-  val array = Array.ofDim(Int.MaxValue) // OutOfMemoryError
+  //val array = Array.ofDim(Int.MaxValue) // OutOfMemoryError
 
   // SO
   def infinite: Int = 1 + infinite
