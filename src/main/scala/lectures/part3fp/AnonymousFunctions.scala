@@ -48,5 +48,14 @@ object AnonymousFunctions extends App {
   val superAdderLambda: Int => (Int => Int) = a => { b =>
     a + b
   }
+  // OR
+  val superAdderLambda2 = (x: Int) => (y: Int) => x + y
+
   println(superAdderLambda(3)(6))
+  println(superAdderLambda2(4)(8))
+
+  val whatever: Function1[Function1[Int, String], String] = new Function1[Function1[Int, String], String] {
+    override def apply(fn: Function1[Int, String]): String = fn(42)
+  }
+  println(whatever((x: Int) => "foo" * x))
 }

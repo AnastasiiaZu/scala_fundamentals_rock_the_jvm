@@ -1,6 +1,6 @@
 package exercises
 
-import scala.collection.immutable.TreeSeqMap.Empty
+
  abstract class MyList [+A] {
 
   def head: A
@@ -17,6 +17,13 @@ import scala.collection.immutable.TreeSeqMap.Empty
   def filter(condition: A => Boolean): MyList[A]
   // concatenation
   def ++ [B >: A] (list: MyList[B]): MyList[B]
+
+   // functional part HOFs
+   def foreach (f: A => Unit): Unit
+   def sort (compare: (A, A) => Int): MyList[A]
+   def zipWith[B, C] (list: MyList[B], zip: (A, B) => C): MyList[C]
+   def fold[B] (start: B)(operator: (B, A) => B): B
+
 }
 
 case object EmptyList extends MyList [Nothing] {
@@ -31,6 +38,16 @@ case object EmptyList extends MyList [Nothing] {
   def filter(condition: Nothing => Boolean): MyList[Nothing] = EmptyList
 
   def ++ [B >: Nothing] (list: MyList[B]): MyList[B] = list
+
+  //HOFs
+  override def foreach(f: Nothing => Unit): Unit = ()
+  override def sort(compare: (Nothing, Nothing) => Int): MyList[Nothing] = EmptyList
+
+  override def zipWith[B, C](list: MyList[B], zip: (Nothing, B) => C): MyList[C] =
+    if (!list.isEmpty) throw new RuntimeException("Lists do not have the same length")
+    else EmptyList
+
+  override def fold[B](start: B)(operator: (B, Nothing) => B): B = start
 }
 
 case class Cons [+A] (h: A, t: MyList[A]) extends MyList [A] {
@@ -53,12 +70,46 @@ case class Cons [+A] (h: A, t: MyList[A]) extends MyList [A] {
 
   def flatMap[B] (transformer: A => MyList[B]): MyList[B] =
     transformer(h) ++ t.flatMap(transformer)
+
+  // HOFs
+  override def foreach(f: A => Unit): Unit = {
+    f(h)
+    tail.foreach(f)
+  }
+
+  override def sort(compare: (A, A) => Int): MyList[A] = {
+    def insert(x: A, sortedList: MyList[A]): MyList[A] = {
+      if (sortedList.isEmpty) Cons(x, EmptyList)
+      else if (compare(x, sortedList.head) <=0) Cons(x, sortedList)
+      else Cons(sortedList.head, insert(x, sortedList.tail))
+    }
+
+    val sortedTail = t.sort(compare)
+    insert(h, sortedTail)
+  }
+
+  override def zipWith[B, C](list: MyList[B], zip: (A, B) => C): MyList[C] =
+    if (list.isEmpty) throw new RuntimeException("Lists do not have the same length")
+    else Cons (zip(h, list.head), t.zipWith(list.tail, zip))
+
+  override def fold[B](start: B)(operator: (B, A) => B): B = {
+    val newStart = operator(start, h)
+    t.fold(newStart)(operator)
+  }
 }
 
 object ListTest extends App {
-  val list1 = new Cons(1, new Cons(2, new Cons (3, EmptyList)))
+  val listOfIntegers = new Cons(1, new Cons(2, new Cons (3, EmptyList)))
+  val anotherListOfIntegers: MyList[Int] = new Cons(4, new Cons (5, EmptyList))
+  val listOfStrings: MyList[String] = new Cons("Hello ", new Cons ("Scala!", EmptyList))
 
-  println(list1.toString)
+  println(listOfIntegers.toString)
+
+  println(listOfIntegers.map(_ * 2).toString)
+  println(listOfIntegers.filter(_ % 2 == 0).toString)
+  println(listOfIntegers.flatMap(elem => new Cons(elem, new Cons(elem + 1, EmptyList))).toString)
+
+
 }
 
 
