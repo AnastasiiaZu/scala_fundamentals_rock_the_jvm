@@ -109,6 +109,13 @@ object ListTest extends App {
   println(listOfIntegers.filter(_ % 2 == 0).toString)
   println(listOfIntegers.flatMap(elem => new Cons(elem, new Cons(elem + 1, EmptyList))).toString)
 
+  // for comprehension
+  val combinations = for {
+    n <- listOfIntegers
+    string <- listOfStrings
+  } yield n + " " + string // is also an expression
+
+  println(combinations)
 
 }
 
