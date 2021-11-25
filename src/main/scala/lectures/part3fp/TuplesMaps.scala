@@ -13,36 +13,37 @@ object TuplesMaps extends App {
   // Maps - associate keys to values
   val aMap: Map[String, Int] = Map()
 
-  val phoneBook = Map(("Jim", 3445), ("Nina", 5647)) // specifying pairings
+  val phonebook = Map(("Jim", 3445), ("Nina", 5647)) // specifying pairings
   // OR
   val anotherPhoneBook = Map("Daniel" -> 9907, "Anna" -> 9874).withDefaultValue(0) // otherwise throws a NoSuchElementException
   println(anotherPhoneBook)
 
   // Maps ops
-  println(phoneBook.contains("Jim")) // true
-  println(phoneBook("Jim")) // 3445
+  println(phonebook.contains("Jim")) // true
+  println(phonebook("Jim")) // 3445
 
   // add a pairing
   val newPairing = "Mary" -> 345
-  val newPhoneBook = phoneBook + newPairing
+  val newPhoneBook = phonebook + newPairing
   println(newPhoneBook)
 
   // functionals on Maps
   // map, flatmap, filter
 
-  println(phoneBook.map(pair => pair._1.toLowerCase -> pair._2))
+  println(phonebook.map(pair => pair._1.toLowerCase -> pair._2))
 
   // filterKeys
-  println(phoneBook.view.filterKeys(x => x.startsWith("J")).toMap)
+  println(phonebook.view.filterKeys(x => x.startsWith("J")).toMap)
 
   // mapValues
-  println(phoneBook.view.mapValues(number => number * 10).toMap)
+  println(phonebook.view.mapValues(number => number * 10).toMap)
 
   // conversion to other collection
-  println(phoneBook.toList)
+  println(phonebook.toList)
   println(List(("Nastia", 555)).toMap)
 
   val names = List("Jim", "Ana", "Angela", "Mary", "James", "Matt")
   println(names.groupBy(name => name.charAt(0)))
+
 
 }
