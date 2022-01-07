@@ -1,4 +1,4 @@
-package lectures.part3fp
+package lectures.p4pm
 
 import exercises.{Cons, EmptyList, MyList}
 
@@ -26,7 +26,7 @@ object AllThePatterns extends App {
   }
 
   // 3 - tuples
-  val aTuple = (1,2)
+  val aTuple = (1, 2)
   val matchATuple = aTuple match {
     case (1, 1) => "WOW"
     case (something, 2) => s"I've found $something"
@@ -46,12 +46,12 @@ object AllThePatterns extends App {
   }
 
   // 5 - list patterns
-  val aStandardList = List(1,2,3,42)
+  val aStandardList = List(1, 2, 3, 42)
   val standardListMatching = aStandardList match {
     case List(1, _, _, _) => "this is an extractor" // advanced
     case List(1, _*) => "a list of arbitrary lenght" // advanced
     case 1 :: List(_) => "infix pattern" // a lot of magic here
-    case List(1,2,3) :+ 42 => "also an infix pattern"
+    case List(1, 2, 3) :+ 42 => "also an infix pattern"
   }
 
   // 6 - type specifiers
@@ -64,8 +64,8 @@ object AllThePatterns extends App {
 
   // 7 - name binding
   val nameBindingMatch = aList match {
-    case nonEmptyList @ Cons(_, _) => "names a pattern = name binding" // use the name later (here)
-    case Cons(1, rest @ Cons(2, _)) => "binding inside nested patterns"
+    case nonEmptyList@Cons(_, _) => "names a pattern = name binding" // use the name later (here)
+    case Cons(1, rest@Cons(2, _)) => "binding inside nested patterns"
   }
 
   // 8 - multi-patterns
@@ -80,7 +80,7 @@ object AllThePatterns extends App {
 
   ////////
 
-  val numbers = List(1,2,3)
+  val numbers = List(1, 2, 3)
   val numbersMatch = numbers match {
     case listOfStrings: List[String] => "this is a list of strings"
     case listOfNumbers: List[Int] => "this is a list of numbers"
